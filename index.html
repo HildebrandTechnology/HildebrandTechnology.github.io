@@ -1,1 +1,79 @@
-API Documentation
+<h3>Create with energyhive</h3>
+<p>energyhive is commited to helping you make the most of your sensor data. To that end we're providing a set of developer friendly APIs that will enable you to do just that.</p>
+<p>There are two main ways to create functionality in energyhive and share your applications with others. The first is through API's that retrieve data from sensors configured on an energyhive account, and the second is deploying your own front-end code to the energyhive dashboard.&nbsp;</p>
+<h3>API Access</h3>
+<p>First log into your energyhive account and go to the Settings page (this is in the pull down menu under your username in the upper right of the site).</p>
+<p>Then select App Tokens from the submenu on the left. You should see a table with your App Tokens where you may already have an App Token for our iPhone or Android apps.</p>
+<p>Create a new App Token by pressing the [Add token] hyperlink. This will create a new row in the Valid tokens table and is ready for use.</p>
+<p>Use this token with our API to make calls to fetch data as JSON and integrate into your own applications.</p>
+<p>You can invite any other energyhive user to use your application by getting them to generate a key and sharing that with your code. The data will then be uniquely theirs with your application logic. If you have something really exciting, let us know and we'll advertise it on the web site to the thousands of energyhive users!</p>
+<h3>Try it!</h3>
+<p><strong>Your App Token:</strong> <input id="apikey" type="text" size="32" /></p>
+<pre id="input" style="display: hidden;">&nbsp;</pre>
+<pre id="output">Enter your API key above</pre>
+<p><strong>Instant Readings (Watts)</strong> - <a href="javascript:getInstant()">try</a></p>
+<p><strong>Historical Readings (Watt hours)</strong>&nbsp;-&nbsp;<a href="javascript:getTimeSeries()">try</a></p>
+<p><strong>Weather (London)</strong> -&nbsp;<a href="javascript:getWeather()">try</a></p>
+<h3>Dashboard Deployment</h3>
+<p>If you want to share some nice front-end work, then you can use Gist (from Github) to write your HTML/CSS/JS and we'll link it into the dashboard. This allows you to create some nice visualisations and advertise them to anyone using Energyhive. It is probably best to see an example in action here. <a href="https://gist.github.com/marksharratt/8435524">https://gist.github.com/marksharratt/8435524</a></p>
+<p>To view that example within the dashboard you then reference the Gist with <a href="/gist/8435524">http://www.energyhive.com/gist/8435524</a></p>
+<p>In order to see the data in the dashboard you have to be logged in. And like the API example you can share the Gist URL with another energyhive user and they can see their data within your new visualisation.</p>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">// <![CDATA[
+function debugLog(msg) {
+	console.log(msg);
+	$('#output').html(msg);
+}
+
+function getInstant() {
+        var token = $('#apikey').val();
+        $('#input').html('http://www.energyhive.com/mobile_proxy/getInstant?token=' + token);
+
+	$.ajax({
+		url: '/mobile_proxy/getInstant',
+		type: 'GET',
+		dataType: 'json',
+		data: 'token=' + token,	 
+		timeout: 9000,
+		success: function(json){
+		  debugLog(JSON.stringify(json));
+		}    
+	});
+
+}
+
+function getWeather() {
+
+        var token = $('#apikey').val();
+        $('#input').html('http://www.energyhive.com/mobile_proxy/getWeather?city=London&country=GB&token=' + token);
+
+	$.ajax({
+		url: '/mobile_proxy/getWeather',
+		type: 'GET',
+		dataType: 'json',
+		data: 'token=' + token + '&city=London&country=GB',	 
+		timeout: 9000,
+		success: function(json){
+		  debugLog(JSON.stringify(json));
+		}    
+	});
+
+}
+
+function getTimeSeries() {
+
+        var token = $('#apikey').val();
+        $('#input').html('http://www.energyhive.com/mobile_proxy/getTimeSeries?&fromTime=1394544656&toTime=1394544856&aggPeriod=hour&aggFunc=sum&offset=0&token=' + token);
+	$.ajax({
+		url: '/mobile_proxy/getTimeSeries',
+		type: 'GET',
+		dataType: 'json',
+		data: 'token=' + token + '&fromTime=1394544656&toTime=1394544856&aggPeriod=hour&aggFunc=sum&offset=0',	 
+		timeout: 9000,
+		success: function(json){
+		  debugLog(JSON.stringify(json));
+		}    
+	});
+
+}
+// ]]></script>
