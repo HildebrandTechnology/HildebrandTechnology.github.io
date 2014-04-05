@@ -30,7 +30,7 @@ function getInstant() {
         $('#input').html('http://www.energyhive.com/mobile_proxy/getInstant?token=' + token);
 
 	$.ajax({
-		url: '/mobile_proxy/getInstant',
+		url: 'http://www.energyhive.com/mobile_proxy/getInstant',
 		type: 'GET',
 		dataType: 'json',
 		data: 'token=' + token,	 
@@ -48,7 +48,7 @@ function getWeather() {
         $('#input').html('http://www.energyhive.com/mobile_proxy/getWeather?city=London&country=GB&token=' + token);
 
 	$.ajax({
-		url: '/mobile_proxy/getWeather',
+		url: 'http://www.energyhive.com/mobile_proxy/getWeather',
 		type: 'GET',
 		dataType: 'json',
 		data: 'token=' + token + '&city=London&country=GB',	 
@@ -65,7 +65,7 @@ function getTimeSeries() {
         var token = $('#apikey').val();
         $('#input').html('http://www.energyhive.com/mobile_proxy/getTimeSeries?&fromTime=1394544656&toTime=1394544856&aggPeriod=hour&aggFunc=sum&offset=0&token=' + token);
 	$.ajax({
-		url: '/mobile_proxy/getTimeSeries',
+		url: 'http://www.energyhive.com/mobile_proxy/getTimeSeries',
 		type: 'GET',
 		dataType: 'json',
 		data: 'token=' + token + '&fromTime=1394544656&toTime=1394544856&aggPeriod=hour&aggFunc=sum&offset=0',	 
